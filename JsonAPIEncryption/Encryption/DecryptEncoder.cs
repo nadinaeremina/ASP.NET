@@ -12,13 +12,14 @@
             // Секретный ключ (длина - 16 bit)
             ushort secretKey = 0x0088;
             char[] mas_char;
-            string result = "";      //переменная которая будет содержать зашифрованную строку
+            string result = "";      
             do
             {
                 mas_char = data.ToArray();
-                foreach (var el in mas_char)  //выбираем каждый элемент из массива символов нашей строки
+                foreach (var el in mas_char)  
                 {
-                    result += TopSecret(el, secretKey);  //производим шифрование каждого отдельного элемента и сохраняем его в строку
+                    //производим шифрование каждого отдельного элемента и сохраняем его в строку
+                    result += TopSecret(el, secretKey);  
                 }
                 data = result;
                 if (count == 1)
