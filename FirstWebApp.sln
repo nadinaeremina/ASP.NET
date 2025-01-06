@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiddlewareSandbox", "Middle
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequestChallange", "RequestChallange\RequestChallange.csproj", "{981832AC-F2CC-4FBB-AB65-C731B76E4880}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonAPIEncryption", "JsonAPIEncryption\JsonAPIEncryption.csproj", "{57A50D8F-BCAE-4DED-B1BE-00A7765B5111}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{981832AC-F2CC-4FBB-AB65-C731B76E4880}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{981832AC-F2CC-4FBB-AB65-C731B76E4880}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{981832AC-F2CC-4FBB-AB65-C731B76E4880}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57A50D8F-BCAE-4DED-B1BE-00A7765B5111}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57A50D8F-BCAE-4DED-B1BE-00A7765B5111}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57A50D8F-BCAE-4DED-B1BE-00A7765B5111}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57A50D8F-BCAE-4DED-B1BE-00A7765B5111}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,7 +9,6 @@
         public int Group { get; set; } // группа 
         public int Period { get; set; } // период 
         public int ProtonsNumber { get; set; } // кол-во протонов в ядре эл-та
-        
         public Element() {}
     }
 }
