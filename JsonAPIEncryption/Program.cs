@@ -1,4 +1,4 @@
-using JsonAPIEncryption.Encryption;
+п»їusing JsonAPIEncryption.Encryption;
 using JsonAPIEncryption.Messages;
 using System.Diagnostics;
 using System.Text.Json;
@@ -6,20 +6,20 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// добавление сервиса 'IEncoder' с имплементацией 'MD5Encoder' в наш 'IoC-контейнер'
+// РґРѕР±Р°РІР»РµРЅРёРµ СЃРµСЂРІРёСЃР° 'IEncoder' СЃ РёРјРїР»РµРјРµРЅС‚Р°С†РёРµР№ 'MD5Encoder' РІ РЅР°С€ 'IoC-РєРѕРЅС‚РµР№РЅРµСЂ'
 // builder.Services.AddTransient<IEncoder, MD5Encoder>();
-// добавление сервиса 'IEncoder' с имплементацией 'BCryptEncoder' в наш 'IoC-контейнер'
+// РґРѕР±Р°РІР»РµРЅРёРµ СЃРµСЂРІРёСЃР° 'IEncoder' СЃ РёРјРїР»РµРјРµРЅС‚Р°С†РёРµР№ 'BCryptEncoder' РІ РЅР°С€ 'IoC-РєРѕРЅС‚РµР№РЅРµСЂ'
 //builder.Services.AddTransient<IEncoder, BCryptEncoder>();
 
-// используем фабрику для удобства использования приложения
-builder.Services.AddTransient(opts => EncoderFactory.CreateEncoder()); // добавили фабрику
-// 'generic' уже можно не писать, потому что метод возвращает интерфейс
+// РёСЃРїРѕР»СЊР·СѓРµРј С„Р°Р±СЂРёРєСѓ РґР»СЏ СѓРґРѕР±СЃС‚РІР° РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РїСЂРёР»РѕР¶РµРЅРёСЏ
+builder.Services.AddTransient(opts => EncoderFactory.CreateEncoder()); // РґРѕР±Р°РІРёР»Рё С„Р°Р±СЂРёРєСѓ
+// 'generic' СѓР¶Рµ РјРѕР¶РЅРѕ РЅРµ РїРёСЃР°С‚СЊ, РїРѕС‚РѕРјСѓ С‡С‚Рѕ РјРµС‚РѕРґ РІРѕР·РІСЂР°С‰Р°РµС‚ РёРЅС‚РµСЂС„РµР№СЃ
 
 var app = builder.Build();
 
-// 'Process.GetCurrentProcess' — статический метод класса System.Diagnostics,
-// который возвращает новый объект Process, представляющий процесс, который является активным в текущий момент
-// 'StartTime' - получаем время запуска текущего процесса
+// 'Process.GetCurrentProcess' вЂ” СЃС‚Р°С‚РёС‡РµСЃРєРёР№ РјРµС‚РѕРґ РєР»Р°СЃСЃР° System.Diagnostics,
+// РєРѕС‚РѕСЂС‹Р№ РІРѕР·РІСЂР°С‰Р°РµС‚ РЅРѕРІС‹Р№ РѕР±СЉРµРєС‚ Process, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰РёР№ РїСЂРѕС†РµСЃСЃ, РєРѕС‚РѕСЂС‹Р№ СЏРІР»СЏРµС‚СЃСЏ Р°РєС‚РёРІРЅС‹Рј РІ С‚РµРєСѓС‰РёР№ РјРѕРјРµРЅС‚
+// 'StartTime' - РїРѕР»СѓС‡Р°РµРј РІСЂРµРјСЏ Р·Р°РїСѓСЃРєР° С‚РµРєСѓС‰РµРіРѕ РїСЂРѕС†РµСЃСЃР°
 
 // without sugar
 app.MapGet("/", async(HttpContext context) =>
@@ -53,7 +53,7 @@ app.MapGet("/ping", async (HttpContext context) =>
 // with sugar
 app.MapGet("/ping-sugar", () => new StringMessage() { Message = "pong" });
 
-// пример запроса:
+// РїСЂРёРјРµСЂ Р·Р°РїСЂРѕСЃР°:
 //{
 //    "data": "gtdhfghjhjkkkkkk",
 //    "count": 1
@@ -64,16 +64,16 @@ app.MapPost("/encode", async (HttpContext context, IEncoder encoder) =>
 {
     try
     {
-        // 1 // считываем входные данные
+        // 1 // СЃС‡РёС‚С‹РІР°РµРј РІС…РѕРґРЅС‹Рµ РґР°РЅРЅС‹Рµ
         StringData? data = null;
         try
         {
             data = await context.Request.ReadFromJsonAsync<StringData>();
-            // 'ReadFromJsonAsync' - позволяет читать JSON из запроса и десериализовать его в объект определённого типа
-            // 'ReadToEndAsync ' - асинхронно считывает все символы с текущей позиции до конца средства чтения текста
-            // и возвращает их в виде одной строки.
+            // 'ReadFromJsonAsync' - РїРѕР·РІРѕР»СЏРµС‚ С‡РёС‚Р°С‚СЊ JSON РёР· Р·Р°РїСЂРѕСЃР° Рё РґРµСЃРµСЂРёР°Р»РёР·РѕРІР°С‚СЊ РµРіРѕ РІ РѕР±СЉРµРєС‚ РѕРїСЂРµРґРµР»С‘РЅРЅРѕРіРѕ С‚РёРїР°
+            // 'ReadToEndAsync ' - Р°СЃРёРЅС…СЂРѕРЅРЅРѕ СЃС‡РёС‚С‹РІР°РµС‚ РІСЃРµ СЃРёРјРІРѕР»С‹ СЃ С‚РµРєСѓС‰РµР№ РїРѕР·РёС†РёРё РґРѕ РєРѕРЅС†Р° СЃСЂРµРґСЃС‚РІР° С‡С‚РµРЅРёСЏ С‚РµРєСЃС‚Р°
+            // Рё РІРѕР·РІСЂР°С‰Р°РµС‚ РёС… РІ РІРёРґРµ РѕРґРЅРѕР№ СЃС‚СЂРѕРєРё.
         }
-        // если 'raw' совершенно пустая
+        // РµСЃР»Рё 'raw' СЃРѕРІРµСЂС€РµРЅРЅРѕ РїСѓСЃС‚Р°СЏ
         catch (InvalidOperationException ex)
         {
             // 400
@@ -81,7 +81,7 @@ app.MapPost("/encode", async (HttpContext context, IEncoder encoder) =>
             ErrorMessage error = new ErrorMessage(ex.GetType().Name, "qwery is empty");
             await context.Response.WriteAsJsonAsync(error);
         }
-        // если в поле 'data' отсутствуют данные // не всегда работает ????????????????????
+        // РµСЃР»Рё РІ РїРѕР»Рµ 'data' РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РґР°РЅРЅС‹Рµ // РЅРµ РІСЃРµРіРґР° СЂР°Р±РѕС‚Р°РµС‚ ????????????????????
         catch (InvalidEncodingDataException ex)
         {
             // 400
@@ -89,7 +89,7 @@ app.MapPost("/encode", async (HttpContext context, IEncoder encoder) =>
             ErrorMessage error = new ErrorMessage(ex.GetType().Name, "in the 'data' field");
             await context.Response.WriteAsJsonAsync(error);
         }
-        // если неправильный формат json (ошибки в синтаксисе)
+        // РµСЃР»Рё РЅРµРїСЂР°РІРёР»СЊРЅС‹Р№ С„РѕСЂРјР°С‚ json (РѕС€РёР±РєРё РІ СЃРёРЅС‚Р°РєСЃРёСЃРµ)
         catch (JsonException ex)
         {
             // 400
@@ -106,17 +106,17 @@ app.MapPost("/encode", async (HttpContext context, IEncoder encoder) =>
             return;
         }
 
-        // 2 // выполнить шифрование
+        // 2 // РІС‹РїРѕР»РЅРёС‚СЊ С€РёС„СЂРѕРІР°РЅРёРµ
         // IEncoder mEncoder = context.RequestServices.GetRequiredService<IEncoder>();
         string encodedData = encoder.Encode(data.Data, data.Count);
 
-        // 4 // отправить ответ
+        // 4 // РѕС‚РїСЂР°РІРёС‚СЊ РѕС‚РІРµС‚
         EncodingResult result = new EncodingResult(encodedData, encoder.AlgorithmName, data.Count);
         // 200
         context.Response.StatusCode = StatusCodes.Status200OK;
         await context.Response.WriteAsJsonAsync(result);
     }
-    // когда попадаем сюда ????????????????????????
+    // РєРѕРіРґР° РїРѕРїР°РґР°РµРј СЃСЋРґР° ????????????????????????
     catch (ArgumentException ex)
     {
         // 400
@@ -124,20 +124,20 @@ app.MapPost("/encode", async (HttpContext context, IEncoder encoder) =>
         ErrorMessage error = new ErrorMessage(ex.GetType().Name, "2a");
         await context.Response.WriteAsJsonAsync(error);
     }
-    // когда попадаем сюда ????????????????????????
+    // РєРѕРіРґР° РїРѕРїР°РґР°РµРј СЃСЋРґР° ????????????????????????
     catch (InvalidOperationException ex)
     {
         // 400
         context.Response.StatusCode = StatusCodes.Status400BadRequest;
-        ErrorMessage error = new ErrorMessage(ex.GetType().Name, "2iщ");
+        ErrorMessage error = new ErrorMessage(ex.GetType().Name, "2iС‰");
         await context.Response.WriteAsJsonAsync(error);
     }
-    // не всегда работает ?????????????????????
-    // если обьект не подходит для сериализации
-    // например он такой: 
+    // РЅРµ РІСЃРµРіРґР° СЂР°Р±РѕС‚Р°РµС‚ ?????????????????????
+    // РµСЃР»Рё РѕР±СЊРµРєС‚ РЅРµ РїРѕРґС…РѕРґРёС‚ РґР»СЏ СЃРµСЂРёР°Р»РёР·Р°С†РёРё
+    // РЅР°РїСЂРёРјРµСЂ РѕРЅ С‚Р°РєРѕР№: 
     //{
     //    "id": 5,
-    //    "name": "Кальций",
+    //    "name": "РљР°Р»СЊС†РёР№",
     //    "code": "Ca",
     //    "group": 2,
     //    "period": 4,
@@ -150,7 +150,7 @@ app.MapPost("/encode", async (HttpContext context, IEncoder encoder) =>
         ErrorMessage error = new ErrorMessage(ex.GetType().Name, "it is impossible to serialize");
         await context.Response.WriteAsJsonAsync(error);
     }
-    // все остальные уже улетят в 500
+    // РІСЃРµ РѕСЃС‚Р°Р»СЊРЅС‹Рµ СѓР¶Рµ СѓР»РµС‚СЏС‚ РІ 500
     catch (Exception ex)
     {
         // 500
@@ -162,32 +162,32 @@ app.MapPost("/encode", async (HttpContext context, IEncoder encoder) =>
 
 // with sugar
 // 'Results Api'
-// 'Results Api' - оболочка, которая позволяет формировать результаты запросов,
-// устанавливая соответствующие коды через вызовы нужных методов
+// 'Results Api' - РѕР±РѕР»РѕС‡РєР°, РєРѕС‚РѕСЂР°СЏ РїРѕР·РІРѕР»СЏРµС‚ С„РѕСЂРјРёСЂРѕРІР°С‚СЊ СЂРµР·СѓР»СЊС‚Р°С‚С‹ Р·Р°РїСЂРѕСЃРѕРІ,
+// СѓСЃС‚Р°РЅР°РІР»РёРІР°СЏ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРµ РєРѕРґС‹ С‡РµСЂРµР· РІС‹Р·РѕРІС‹ РЅСѓР¶РЅС‹С… РјРµС‚РѕРґРѕРІ
 
-// можно явно указывать 'IResult', а можно вообще не указывать 
+// РјРѕР¶РЅРѕ СЏРІРЅРѕ СѓРєР°Р·С‹РІР°С‚СЊ 'IResult', Р° РјРѕР¶РЅРѕ РІРѕРѕР±С‰Рµ РЅРµ СѓРєР°Р·С‹РІР°С‚СЊ 
 app.MapPost("/encode-sugar", IResult (StringData data, IEncoder encoder) =>
 {
     try
     {
-        // 2 // выполнить шифрование
+        // 2 // РІС‹РїРѕР»РЅРёС‚СЊ С€РёС„СЂРѕРІР°РЅРёРµ
         // IEncoder mEncoder = context.RequestServices.GetRequiredService<IEncoder>();
         string encodedData = encoder.Encode(data.Data, data.Count);
 
-        // 4 // отправить ответ
+        // 4 // РѕС‚РїСЂР°РІРёС‚СЊ РѕС‚РІРµС‚
         EncodingResult result = new EncodingResult(encodedData, encoder.AlgorithmName, data.Count);
         // 200
-        // отправить ответ // 200 // OK
+        // РѕС‚РїСЂР°РІРёС‚СЊ РѕС‚РІРµС‚ // 200 // OK
         return Results.Ok(result); // 200
     }
-    // когда попадаем сюда ????????????????????????
+    // РєРѕРіРґР° РїРѕРїР°РґР°РµРј СЃСЋРґР° ????????????????????????
     catch (ArgumentException ex)
     {
         // 400
         ErrorMessage error = new ErrorMessage(ex.GetType().Name, ex.Message);
         return Results.BadRequest(error);
     }
-    // когда попадаем сюда ????????????????????????
+    // РєРѕРіРґР° РїРѕРїР°РґР°РµРј СЃСЋРґР° ????????????????????????
     catch (InvalidOperationException ex)
     {
         // 400
