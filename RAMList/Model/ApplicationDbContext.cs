@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
-namespace ChemicalElementsDictionary
+namespace RAMList.Model
 {
     // класс-менеджер для работы с БД через EF
-    public class ApplicationDbContext: DbContext
+    public class ApplicationDbContext : DbContext
     {
-        public required DbSet<Element> Elements { get; set; }
+        public required DbSet<RAM> RAMS { get; set; }
         // 'required' - новый модификатор, который требуется для ссылочных nullable-полей,
         // здесь точно должно быть заинициализировано значение
 
@@ -14,7 +15,7 @@ namespace ChemicalElementsDictionary
         {
             string connectionString = @"
                 Data Source=NADI\SQLEXPRESS;
-                Initial Catalog=elements_db_pv324;
+                Initial Catalog=RAMS_db_pv324;
                 Integrated Security=SSPI;
                 Timeout=10;
                 TrustServerCertificate=True;
@@ -23,9 +24,3 @@ namespace ChemicalElementsDictionary
         }
     }
 }
-
-// Миграции
-// 'Tools' - 'Nuget Package Manager' - 'Package Manager Console'
-// 'Add-Migration Init' - папочка 'Mogration'  в корне создается
-// 'Remove-Migration' - для удаления миграции
-// 'Update-Database' - применение миграции

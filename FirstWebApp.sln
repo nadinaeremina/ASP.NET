@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequestChallange", "Request
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonAPIEncryption", "JsonAPIEncryption\JsonAPIEncryption.csproj", "{57A50D8F-BCAE-4DED-B1BE-00A7765B5111}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAMList", "RAMList\RAMList.csproj", "{70A8F19A-B882-427D-91B8-BDE0EF3E37DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{57A50D8F-BCAE-4DED-B1BE-00A7765B5111}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57A50D8F-BCAE-4DED-B1BE-00A7765B5111}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57A50D8F-BCAE-4DED-B1BE-00A7765B5111}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70A8F19A-B882-427D-91B8-BDE0EF3E37DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70A8F19A-B882-427D-91B8-BDE0EF3E37DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70A8F19A-B882-427D-91B8-BDE0EF3E37DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70A8F19A-B882-427D-91B8-BDE0EF3E37DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
