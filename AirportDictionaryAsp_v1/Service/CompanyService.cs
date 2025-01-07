@@ -2,7 +2,7 @@
 
 namespace AirportDictionaryAsp_v1.Service
 {
-    // класс для выполнения операций с авиакомпаниями
+    // класс для выполнения операций с авиакомпаниями - работает с EF
     public class CompanyService
     {
         // 'dbcontext' - это зависимость и она передается через конструктор

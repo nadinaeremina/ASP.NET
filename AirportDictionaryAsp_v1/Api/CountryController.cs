@@ -6,6 +6,7 @@ namespace AirportDictionaryAsp_v1.Api
 {
     // CountryController - контроллер для работы со странами
 
+    // ресурс этого контроллера - это страны
     [Route("api/country")]
     [ApiController]
     // сделаем его наследником 'ControllerBase'
@@ -26,7 +27,7 @@ namespace AirportDictionaryAsp_v1.Api
         public async Task<List<CountryMessage>> ListAllAsync()
         {
             // получаем список стран
-            List<Country> countries = await _countries.ListAllAsunc();
+            List<Country> countries = await _countries.ListAllAsync();
 
             // селектим их // из класса рекорд получаем
             return countries

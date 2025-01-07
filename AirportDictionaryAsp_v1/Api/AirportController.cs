@@ -7,6 +7,10 @@ namespace AirportDictionaryAsp_v1.Api
     // контроллер для работы с аэропортами
     // сервисы необязательно внедряются в соответствующие контроллеры
     // аэропорт-контроллер может в себя внедрить как сервис аэропортов, так и сервис стран
+    // 'Rout' - нужен для тогго, чтобы маршрутизироваться к методам контроллера
+    // все методы данного контроллера, являющиеся обработчиками, будут в префиксе маршрута иметь это значение
+    // 'ApiController' - данная аннотация используется для добавления контроллера в IoC-контейнер
+    // и для их привязки к обработчикам
     [Route("api/airport")]
     [ApiController]
     public class AirportController: ControllerBase
@@ -25,13 +29,14 @@ namespace AirportDictionaryAsp_v1.Api
 
         // обработчики
 
-        // получаем список аэропортов
+        // Get /api/airport
+        // получаем список аэропортов // к данному обработчику будет вести метод 'get'
         [HttpGet]
         public async Task<List<AirportListItemMessage>> GetAllAsync()
         {
             // получаем список стран
             List<Airport> airports = await _airports.ListAllAsync();
-            List<Country> countries = await _countries.ListAllAsunc();
+            List<Country> countries = await _countries.ListAllAsync();
 
             // преобразовать список стран в словарь с ключами - id и значениями - кодами 
 

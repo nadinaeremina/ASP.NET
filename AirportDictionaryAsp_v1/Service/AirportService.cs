@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AirportDictionaryAsp_v1.Service
 {
-    // класс для выполнения операций с аэропортами
+    // класс для выполнения операций с аэропортами - работает с EF
     public class AirportService
     {
         // 'dbcontext' - это зависимость и она передается через конструктор
