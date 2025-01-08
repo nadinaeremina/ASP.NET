@@ -26,13 +26,14 @@ namespace AirportDictionaryAsp_v1.Model
         // связи
 
         // аэропорт будет ссылаться на свою страну и иметь 'countryId'
+        // внешний ключ
         public int CountryId { get; set; }
 
         // тк у 'EntityFramework' навигационные св-ва работают лениво - добавляем
         [ForeignKey(nameof(CountryId))]
         // будет агрегировать 'country'
         public Country? Country { get; set; }
-
+        // 'Country' - это навигационное св-во
         // множество компаний
         // 'required' - значение должно быть установлено
         public HashSet<Company>? Companies { get; set; }

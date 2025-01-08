@@ -41,8 +41,28 @@ namespace AirportDictionaryAsp_v1.Service
 
             // если входящий код ни с одним уже существующим не сопадает - тогда добавляем страну
             countries = countries
-                .Where(c => existingCountries.All(ec => ec.Code != c.Code))
+                .Where(c => !existingCountries.Exists(ec => ec.Code == c.Code))
                 .ToList();
+
+            List<Country> tmp = new List<Country>();
+            foreach (Country c in countries)
+            {
+                bool exists = false;
+                foreach (Country ex in existingCountries)
+                {
+                    if (ex.Code == c.Code)
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists)
+                {
+                    tmp.Add(c);
+                }
+            }
+            countries = tmp;
+
             // 'All' - метод проверяет, удовлетворяют ли все элементы в коллекции определённому условию
 
             // 3 // сохранить оставшиеся страны

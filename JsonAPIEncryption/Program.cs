@@ -72,6 +72,10 @@ app.MapPost("/encode", async (HttpContext context, IEncoder encoder) =>
             // 'ReadFromJsonAsync' - позволяет читать JSON из запроса и десериализовать его в объект определённого типа
             // 'ReadToEndAsync ' - асинхронно считывает все символы с текущей позиции до конца средства чтения текста
             // и возвращает их в виде одной строки.
+            if (data.Data == string.Empty)
+            {
+                throw new InvalidEncodingDataException("'data' field is empty");
+            }
         }
         // если 'raw' совершенно пустая
         catch (InvalidOperationException ex)
@@ -81,12 +85,12 @@ app.MapPost("/encode", async (HttpContext context, IEncoder encoder) =>
             ErrorMessage error = new ErrorMessage(ex.GetType().Name, "qwery is empty");
             await context.Response.WriteAsJsonAsync(error);
         }
-        // если в поле 'data' отсутствуют данные // не всегда работает ????????????????????
+        // если в поле 'data' отсутствуют данные 
         catch (InvalidEncodingDataException ex)
         {
             // 400
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            ErrorMessage error = new ErrorMessage(ex.GetType().Name, "in the 'data' field");
+            ErrorMessage error = new ErrorMessage(ex.GetType().Name, ex.Message);
             await context.Response.WriteAsJsonAsync(error);
         }
         // если неправильный формат json (ошибки в синтаксисе)
@@ -101,7 +105,7 @@ app.MapPost("/encode", async (HttpContext context, IEncoder encoder) =>
         {
             // 400
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            ErrorMessage error = new ErrorMessage(ex.GetType().Name, "1");
+            ErrorMessage error = new ErrorMessage(ex.GetType().Name, ex.Message);
             await context.Response.WriteAsJsonAsync(error);
             return;
         }
@@ -116,38 +120,19 @@ app.MapPost("/encode", async (HttpContext context, IEncoder encoder) =>
         context.Response.StatusCode = StatusCodes.Status200OK;
         await context.Response.WriteAsJsonAsync(result);
     }
-    // когда попадаем сюда ????????????????????????
+    // ошибка в коде C#- неправильновызванная функция
     catch (ArgumentException ex)
     {
         // 400
         context.Response.StatusCode = StatusCodes.Status400BadRequest;
-        ErrorMessage error = new ErrorMessage(ex.GetType().Name, "2a");
+        ErrorMessage error = new ErrorMessage(ex.GetType().Name, ex.Message);
         await context.Response.WriteAsJsonAsync(error);
     }
-    // когда попадаем сюда ????????????????????????
     catch (InvalidOperationException ex)
     {
         // 400
         context.Response.StatusCode = StatusCodes.Status400BadRequest;
-        ErrorMessage error = new ErrorMessage(ex.GetType().Name, "2iщ");
-        await context.Response.WriteAsJsonAsync(error);
-    }
-    // не всегда работает ?????????????????????
-    // если обьект не подходит для сериализации
-    // например он такой: 
-    //{
-    //    "id": 5,
-    //    "name": "Кальций",
-    //    "code": "Ca",
-    //    "group": 2,
-    //    "period": 4,
-    //    "protonsNumber": 20
-    //}
-    catch (InvalidEncodingDataException ex)
-    {
-        // 400
-        context.Response.StatusCode = StatusCodes.Status400BadRequest;
-        ErrorMessage error = new ErrorMessage(ex.GetType().Name, "it is impossible to serialize");
+        ErrorMessage error = new ErrorMessage(ex.GetType().Name, ex.Message);
         await context.Response.WriteAsJsonAsync(error);
     }
     // все остальные уже улетят в 500

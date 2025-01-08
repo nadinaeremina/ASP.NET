@@ -158,7 +158,7 @@ namespace AirportDictionaryAsp_v1.Api
                 return NotFound(new ErrorMessage(Type: "AirportNotFound", Message: $"airport with code '{code}' not found")); 
             }
             await _airports.DeleteAsync(code);
-            // 204 ошибка
+            // 204 результат 
             return NoContent();
         }
     }
