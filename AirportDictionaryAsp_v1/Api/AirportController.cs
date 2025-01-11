@@ -37,7 +37,7 @@ namespace AirportDictionaryAsp_v1.Api
         public async Task<List<AirportListItemMessage>> GetAllAsync()
         {
             // получаем список аэропортов
-            List<Airports> airports = await _airports.ListAllAsync();
+            List<Airport> airports = await _airports.ListAllAsync();
             // получаем список стран
             List<Country> countries = await _countries.ListAllAsync();
 
@@ -75,7 +75,7 @@ namespace AirportDictionaryAsp_v1.Api
         // 'IActionResult' нужен для того, чтобы вернуть 'OK', 'NotFound' и тд
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            Airports? airport = await _airports.GetWithCountryAsync(id);
+            Airport? airport = await _airports.GetWithCountryAsync(id);
             if (airport == null)
             {
                 // 404
@@ -101,7 +101,7 @@ namespace AirportDictionaryAsp_v1.Api
         [HttpGet("{code:alpha}")]
         public async Task<IActionResult> GetByCodeAsync(string code)
         {
-            Airports? airport = await _airports.GetWithCountryAsync(code);
+            Airport? airport = await _airports.GetWithCountryAsync(code);
             if (airport == null)
             {
                 // 404
@@ -140,7 +140,7 @@ namespace AirportDictionaryAsp_v1.Api
                 // 409 - статус- конфликт, сервер конфликтует с тем состоянием, к которому мхотим его привести
                 return Conflict(new ErrorMessage(Type: "DuplicatedAirportCode", Message: $"airport with code '{airportMessage.Code}' already exists"));
             }
-            Airports airport = new Airports {
+            Airport airport = new Airport {
                 Name = airportMessage.Name,
                 Code = airportMessage.Code,
                 OpeningYear = airportMessage.OpeningYear,
@@ -180,7 +180,7 @@ namespace AirportDictionaryAsp_v1.Api
         [HttpPut("traffic/{code:alpha}")]
         public async Task<IActionResult> UpdateAnnualPassengerTraffic(string code, UpdateMessage updateMessage)
         {
-            Airports? airport = await _airports.GetWithCountryAsync(code);
+            Airport? airport = await _airports.GetWithCountryAsync(code);
             if (airport == null)
             {
                 // 404
@@ -192,7 +192,6 @@ namespace AirportDictionaryAsp_v1.Api
             return NoContent();
         }
 
-        // ?????????????????????????????????????????????????????????????????????
         // 7 // получить список авиакомпаний, присутствующих в аэропорте по айди
         [HttpGet("{id:int}/companies")]
         public async Task<List<CompanyListItemMessage>> GetCompaniesAsync(int id)
@@ -215,7 +214,6 @@ namespace AirportDictionaryAsp_v1.Api
         //                    join Airports as a on a.Id= ac.AirportsId
         //where a.Id= 6
 
-        // ?????????????????????????????????????????????????????????????????????
         // 8 // добавление авиакомпании по айди в обслуживание данным аэропортом по айди
         [HttpPost("{idComp:int}/{idAir:int}")]
         public async Task<IActionResult> PostCompanyByIdAsync(int idComp, int idAir)
@@ -224,7 +222,6 @@ namespace AirportDictionaryAsp_v1.Api
             return Created();
         }
 
-        // ?????????????????????????????????????????????????????????????????????
         // 9 // удаление авиакомпании по айди в обслуживание данным аэропортом по айди
         [HttpDelete("{idComp:int}/{idAir:int}")]
         public async Task<IActionResult> DeleteCompanyByIdAsync(int idComp, int idAir)

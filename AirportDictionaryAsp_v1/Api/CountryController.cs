@@ -40,7 +40,7 @@ namespace AirportDictionaryAsp_v1.Api
         public async Task<List<AirportListItemMessage>> GetAllAirportsByCodeAsync(string code)
         {
             // получаем список аэропортов
-            List<Airports> airports = await _countries.GetAllAirportsAsync(code);
+            List<Airport> airports = await _countries.GetAllAirportsAsync(code);
             // получаем список стран
             List<Country> countries = await _countries.ListAllAsync();
 

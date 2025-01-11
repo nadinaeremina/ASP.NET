@@ -29,7 +29,7 @@ namespace AirportDictionaryAsp_v1.Service
         }
 
         // 3 // получить список аэропортов, в которых присутствует заданная авиакомпания по id
-        public async Task<List<Airports>?> GetAirports(int id)
+        public async Task<List<Airport>?> GetAirports(int id)
         {
             Company? company = await _db.Companies.Include(c => c.Airports).FirstOrDefaultAsync(c => c.Id == id);
             if (company==null)

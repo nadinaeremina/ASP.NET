@@ -24,7 +24,7 @@ namespace AirportDictionaryAsp_v1.Service
         }
 
         // 2 // получить список аэропортов страны по коду страны
-        public async Task<List<Airports>?> GetAllAirportsAsync(string code)
+        public async Task<List<Airport>?> GetAllAirportsAsync(string code)
         {
             Country? country = await _db.Countries.Include(c => c.Airports).FirstOrDefaultAsync(c => c.Code == code);
             return country.Airports.ToList();

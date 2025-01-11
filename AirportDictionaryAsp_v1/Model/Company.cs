@@ -16,7 +16,7 @@ namespace AirportDictionaryAsp_v1.Model
         // связи
         // множество аэропортов
         // 'required' - значение должно быть установлено
-        public HashSet<Airports>? Airports { get; set; }
+        public HashSet<Airport>? Airports { get; set; }
 
         // конструктор
         public Company() {}

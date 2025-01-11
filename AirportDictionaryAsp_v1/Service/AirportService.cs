@@ -15,14 +15,14 @@ namespace AirportDictionaryAsp_v1.Service
         }
 
         // 1 // получить список всех аэропортов - берем наши аэропорты и в 'ToList()' их загоняем
-        public async Task<List<Airports>> ListAllAsync()
+        public async Task<List<Airport>> ListAllAsync()
         {
             return await _db.Airports.ToListAsync();
             // ToListAsync() — это метод для получения списка объектов в асинхронном режиме в EFCore
         }
 
         // 2 // получить аэропорт по Id с выгрузкой информации о стране
-        public async Task<Airports?> GetWithCountryAsync(int id)
+        public async Task<Airport?> GetWithCountryAsync(int id)
         {
             return await _db.Airports
                 // здесь выгружаются две таблицы, которые циклически ссылаютя друг на друга (аэропорт и страна)
@@ -32,7 +32,7 @@ namespace AirportDictionaryAsp_v1.Service
 
         // 3 // получить аэропорт по коду
         // может быть 'nullable' - если не найден - сервис вернет 'null'
-        public async Task<Airports?> GetWithCountryAsync(string code)
+        public async Task<Airport?> GetWithCountryAsync(string code)
         {
             return await _db.Airports
                 .Include(airport => airport.Country)
@@ -41,7 +41,7 @@ namespace AirportDictionaryAsp_v1.Service
 
         // 4 // добавление аэропорта
         // должны быть заполнены поля аэропорта, кроме id, а также countryId, навигационные св-ва не нужно писать
-        public async Task AddAirportAsync(Airports airport)
+        public async Task AddAirportAsync(Airport airport)
         {
             await _db.Airports.AddAsync(airport);
             await _db.SaveChangesAsync();
@@ -58,7 +58,7 @@ namespace AirportDictionaryAsp_v1.Service
         // 5 // удаление аэропорта
         public async Task DeleteAsync(string code)
         {
-            Airports? airport = await _db.Airports.FirstOrDefaultAsync(a => a.Code == code);
+            Airport? airport = await _db.Airports.FirstOrDefaultAsync(a => a.Code == code);
             if (airport != null)
             {
                 _db.Airports.Remove(airport);
@@ -67,27 +67,29 @@ namespace AirportDictionaryAsp_v1.Service
         }
 
         // 6 // обновление среднегодового пассажиропотока аэропорта
-        public async Task UpdateAsync(Airports airport, long Traffic)
+        public async Task UpdateAsync(Airport airport, long Traffic)
         {
             airport.AnnualPassengerTraffic = Traffic;
             await _db.SaveChangesAsync();
         }
 
         // 7 // получить список авиакомпаний, присутствующих в аэропорте
-        public async Task<List<Company>>? GetCompanies(int id)
+        public async Task<List<Company>> GetCompanies(int id)
         {
-            Airports? airport = await _db.Airports.Include(a => a.Companies).FirstOrDefaultAsync(a => a.Id == id);
-            return airport.Companies.ToList();
+            Airport? airport = await _db.Airports
+                .Include(a => a.Companies)
+                .FirstOrDefaultAsync(a => a.Id == id);
+            return airport!.Companies!.ToList();
         }
 
         // 8 // добавление авиакомпании по айди в обслуживание аэропортом по айди
         public async Task AddCompanyByIdAsync(int idComp, int idAir)
         {
             Company? company = await _db.Companies.Include(c => c.Airports).FirstOrDefaultAsync(company => company.Id == idComp);
-            Airports? airport = await _db.Airports.Include(a => a.Companies).FirstOrDefaultAsync(airport => airport.Id == idAir);
+            Airport? airport = await _db.Airports.Include(a => a.Companies).FirstOrDefaultAsync(airport => airport.Id == idAir);
             if (company != null && airport != null)
             {
-                airport.Companies.Add(company);
+                airport!.Companies!.Add(company);
             }
             await _db.SaveChangesAsync();
         }
@@ -96,16 +98,16 @@ namespace AirportDictionaryAsp_v1.Service
         public async Task RemoveCompanyByIdAsync(int idComp, int idAir)
         {
             Company? company = await _db.Companies.Include(c => c.Airports).FirstOrDefaultAsync(company => company.Id == idComp);
-            Airports? airport = await _db.Airports.Include(a => a.Companies).FirstOrDefaultAsync(airport => airport.Id == idAir);
+            Airport? airport = await _db.Airports.Include(a => a.Companies).FirstOrDefaultAsync(airport => airport.Id == idAir);
             if (company != null && airport != null)
             {
-                airport.Companies.Remove(company);
+                airport!.Companies!.Remove(company);
             }
             await _db.SaveChangesAsync();
         }
 
         // дополнительный метод
-        public async Task<Airports?> GetWithCompanyAsync(int id)
+        public async Task<Airport?> GetWithCompanyAsync(int id)
         {
             return await _db.Airports
                 // здесь выгружаются две таблицы, которые циклически ссылаютя друг на друга (аэропорт и страна)
