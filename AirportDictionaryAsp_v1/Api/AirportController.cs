@@ -1,6 +1,8 @@
-﻿using AirportDictionaryAsp_v1.Model;
+﻿using AirportDictionaryAsp_v1.Api;
+using AirportDictionaryAsp_v1.Model;
 using AirportDictionaryAsp_v1.Service;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace AirportDictionaryAsp_v1.Api
 {
@@ -13,7 +15,7 @@ namespace AirportDictionaryAsp_v1.Api
     // и для их привязки к обработчикам
     [Route("api/airport")]
     [ApiController]
-    public class AirportController: ControllerBase
+    public class AirportController : ControllerBase
     {
         // затаскиваем сервис для работы с аэропортами как зависимость
         private readonly AirportService _airports;
@@ -30,12 +32,13 @@ namespace AirportDictionaryAsp_v1.Api
         // обработчики
 
         // Get /api/airport
-        // получаем список аэропортов // к данному обработчику будет вести метод 'get'
+        // 1 // получаем список всех аэропортов // к данному обработчику будет вести метод 'get'
         [HttpGet]
         public async Task<List<AirportListItemMessage>> GetAllAsync()
         {
+            // получаем список аэропортов
+            List<Airports> airports = await _airports.ListAllAsync();
             // получаем список стран
-            List<Airport> airports = await _airports.ListAllAsync();
             List<Country> countries = await _countries.ListAllAsync();
 
             // преобразовать список стран в словарь с ключами - id и значениями - кодами 
@@ -64,6 +67,7 @@ namespace AirportDictionaryAsp_v1.Api
             )).ToList();
         }
 
+        // 2 // получить аэропорт по id 
         // эти два метода с одинаковым путем, но у них разный тип передачи значения
         // в данном случае без указания типа эти два метода бы не сработали правильно
         // передача параметров через url - здесь какойто путь после аэропорта
@@ -71,7 +75,7 @@ namespace AirportDictionaryAsp_v1.Api
         // 'IActionResult' нужен для того, чтобы вернуть 'OK', 'NotFound' и тд
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            Airport? airport = await _airports.GetAsync(id);
+            Airports? airport = await _airports.GetWithCountryAsync(id);
             if (airport == null)
             {
                 // 404
@@ -92,11 +96,12 @@ namespace AirportDictionaryAsp_v1.Api
             return Ok(result);
         }
 
+        // 3 // получить аэропорт по международному коду  
         // 'alpha' - строковый тип
         [HttpGet("{code:alpha}")]
         public async Task<IActionResult> GetByCodeAsync(string code)
         {
-            Airport? airport = await _airports.GetAsync(code);
+            Airports? airport = await _airports.GetWithCountryAsync(code);
             if (airport == null)
             {
                 // 404
@@ -119,7 +124,7 @@ namespace AirportDictionaryAsp_v1.Api
             return Ok(result);
         }
 
-        // добавление аэропорта
+        // 4 // добавление аэропорта
         [HttpPost]
         public async Task<IActionResult> PostAsync(AddAirportMessage airportMessage)
         {
@@ -135,7 +140,7 @@ namespace AirportDictionaryAsp_v1.Api
                 // 409 - статус- конфликт, сервер конфликтует с тем состоянием, к которому мхотим его привести
                 return Conflict(new ErrorMessage(Type: "DuplicatedAirportCode", Message: $"airport with code '{airportMessage.Code}' already exists"));
             }
-            Airport airport = new Airport { 
+            Airports airport = new Airports {
                 Name = airportMessage.Name,
                 Code = airportMessage.Code,
                 OpeningYear = airportMessage.OpeningYear,
@@ -143,22 +148,88 @@ namespace AirportDictionaryAsp_v1.Api
                 AnnualPassengerTraffic = airportMessage.AnnualPassengerTraffic,
                 Location = airportMessage.Location,
                 CountryId = countryId.Value,
-            };      
+            };
             await _airports.AddAirportAsync(airport);
             return Created();
         }
+        //{
+        //    "name": "Международный аэропорт Шереметьево",
+        //    "code": "SVO",
+        //    "openingYear": 1959,
+        //    "runwayCount": 3,
+        //    "annualPassengerTraffic": 36600000,
+        //    "location": "Московская область",
+        //    "countryCode": "rus"
+        //}
 
-        // удаление аэропорта по коду
+        // 5 // удаление аэропорта по коду
         [HttpDelete("{code:alpha}")]
         public async Task<IActionResult> DeleteByCodeAsync(string code)
         {
             if (await _airports.IsExists(code) == false)
             {
                 // 404
-                return NotFound(new ErrorMessage(Type: "AirportNotFound", Message: $"airport with code '{code}' not found")); 
+                return NotFound(new ErrorMessage(Type: "AirportNotFound", Message: $"airport with code '{code}' not found"));
             }
             await _airports.DeleteAsync(code);
             // 204 результат 
+            return NoContent();
+        }
+
+        // 6 // обновление среднегодового пассажиропотока аэропорта по коду
+        [HttpPut("traffic/{code:alpha}")]
+        public async Task<IActionResult> UpdateAnnualPassengerTraffic(string code, UpdateMessage updateMessage)
+        {
+            Airports? airport = await _airports.GetWithCountryAsync(code);
+            if (airport == null)
+            {
+                // 404
+                return NotFound(new ErrorMessage(Type: "AirportNotFound",
+                                                 Message: $"airport with code '{code}' not found"));
+            }
+            await _airports.UpdateAsync(airport, updateMessage.Traffic);
+            // 204 результат 
+            return NoContent();
+        }
+
+        // ?????????????????????????????????????????????????????????????????????
+        // 7 // получить список авиакомпаний, присутствующих в аэропорте по айди
+        [HttpGet("{id:int}/companies")]
+        public async Task<List<CompanyListItemMessage>> GetCompaniesAsync(int id)
+        {
+            List<Company>? companies = await _airports.GetCompanies(id);
+            //if (companies == null)
+            //{
+            //    return NotFound(new ErrorMessage(Type: "AirportyNotFound", Message: $"airport with id '{id}' not found"));
+            //}           
+
+            return companies.Select(company => new CompanyListItemMessage(
+                Id: company.Id,
+                Name: company.Name
+            )).ToList();
+        }
+
+        // запрос в SQL:
+        //select a.Id, c.Name
+        //from Companies as c join AirportCompany as ac on c.Id= ac.CompaniesId
+        //                    join Airports as a on a.Id= ac.AirportsId
+        //where a.Id= 6
+
+        // ?????????????????????????????????????????????????????????????????????
+        // 8 // добавление авиакомпании по айди в обслуживание данным аэропортом по айди
+        [HttpPost("{idComp:int}/{idAir:int}")]
+        public async Task<IActionResult> PostCompanyByIdAsync(int idComp, int idAir)
+        {
+            await _airports.AddCompanyByIdAsync(idComp, idAir);
+            return Created();
+        }
+
+        // ?????????????????????????????????????????????????????????????????????
+        // 9 // удаление авиакомпании по айди в обслуживание данным аэропортом по айди
+        [HttpDelete("{idComp:int}/{idAir:int}")]
+        public async Task<IActionResult> DeleteCompanyByIdAsync(int idComp, int idAir)
+        {
+            await _airports.RemoveCompanyByIdAsync(idComp, idAir);
             return NoContent();
         }
     }

@@ -32,6 +32,12 @@ namespace AirportDictionaryAsp_v1.Api
     // CountryCode - код лучше, чем имя, потому что по коду мы всегда можем страну идентифицировать однозначно
     // код универсален во всех системах, а не только в нашей (id - это код системы нашей, а код универсален)
 
+    // сообщение с данными об авиакомпании в списке авиакомпаний
+    public record CompanyListItemMessage(int Id, string Name);
+
+    // добавление авиакомпании
+    public record AddCompanyMessage(string Name);
+
     // AirportMessage - сообщение с полными данными об аэропорте
     public record AirportMessage(
         int Id,
@@ -58,4 +64,7 @@ namespace AirportDictionaryAsp_v1.Api
         string Location,
         string CountryCode
     );
+
+    // обновление поля аэропорта: 'AnnualPassengerTraffic'
+    public record UpdateMessage(long Traffic);
 }

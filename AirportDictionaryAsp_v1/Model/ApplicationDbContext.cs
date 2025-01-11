@@ -5,7 +5,7 @@ namespace AirportDictionaryAsp_v1.Model
     public class ApplicationDbContext: DbContext
     {
         // таблицы
-        public required DbSet<Airport> Airports { get; set; }
+        public required DbSet<Airports> Airports { get; set; }
         public required DbSet<Company> Companies { get; set; }
         public required DbSet<Country> Countries { get; set; }
 

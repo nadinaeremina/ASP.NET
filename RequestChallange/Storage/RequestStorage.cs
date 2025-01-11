@@ -3,6 +3,7 @@ using RequestChallange.Model;
 
 namespace RequestChallange.Storage
 {
+    // переопределяем 'RequestStorage'
     public class RequestStorage : IRequestRepository
     {
         // затаскиваем наш 'dbContext'

@@ -1,5 +1,6 @@
 ﻿namespace RequestChallange.Model
 {
+    // модель (приложения) не привязана к 'storage', она ни от чего не зависит, только от нее все зависит 
     // класс, описывающий информацию о http-запросе
     public class RequestInfo
     {

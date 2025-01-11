@@ -12,7 +12,7 @@ namespace AirportDictionaryAsp_v1.Model
 
     // уникальность кода
     [Index(nameof(Code), IsUnique=true)]
-    public class Airport
+    public class Airports
     {
         // поля
         public int Id { get; set; }
@@ -40,6 +40,6 @@ namespace AirportDictionaryAsp_v1.Model
         // 'nullable' - может 'null' иметь значение по умолчанию
 
         // конструктор
-        public Airport() {}
+        public Airports() {}
     }
 }

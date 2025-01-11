@@ -1,4 +1,6 @@
-﻿namespace AirportDictionaryAsp_v1.Model
+﻿using AirportDictionaryAsp_v1.Api;
+
+namespace AirportDictionaryAsp_v1.Model
 {
     // чтобы работать с классами из папки 'Model' - нужно поставить дополнительные библиотеки:
     // 'Microsoft.EntityFrameworkCore.SqlServer'
@@ -14,7 +16,7 @@
         // связи
         // множество аэропортов
         // 'required' - значение должно быть установлено
-        public HashSet<Airport>? Airports { get; set; }
+        public HashSet<Airports>? Airports { get; set; }
 
         // конструктор
         public Company() {}

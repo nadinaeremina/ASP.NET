@@ -14,7 +14,7 @@ namespace AirportDictionaryAsp_v1.Service
             _db = db;
         }
 
-        // получить список стран - берем наши страны и в 'ToList()' их загоняем
+        // 1 // получить список всех стран - берем наши страны и в 'ToList()' их загоняем
         public async Task<List<Country>> ListAllAsync()
         {
             return await _db.Countries.ToListAsync();
@@ -23,7 +23,22 @@ namespace AirportDictionaryAsp_v1.Service
             // потому что EF работает лениво
         }
 
-        // импортировать список стран // добавить
+        // 2 // получить список аэропортов страны по коду страны
+        public async Task<List<Airports>?> GetAllAirportsAsync(string code)
+        {
+            Country? country = await _db.Countries.Include(c => c.Airports).FirstOrDefaultAsync(c => c.Code == code);
+            return country.Airports.ToList();
+        }
+
+        // 3 // очистить данные всех стран с аэропортами
+        public async Task DeleteAllAsync()
+        {
+            List<Country>? countries = await _db.Countries.Include(c => c.Airports).ToListAsync();
+            _db.Countries.RemoveRange(countries);
+            await _db.SaveChangesAsync();
+        }
+
+        // 4 // импортировать список стран // добавить
         public async Task ImportAsync(List<Country> countries)
         {
             // те страны, которые дублируются - удалить
@@ -70,6 +85,7 @@ namespace AirportDictionaryAsp_v1.Service
             await _db.SaveChangesAsync();
         }
 
+        // используется в добавлении аэропорта
         // найти страну по коду
         public async Task<int?> GetIdByCode(string code)
         {

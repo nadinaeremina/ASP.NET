@@ -1,6 +1,6 @@
 ﻿namespace RequestChallange.Storage
 {
-    // класс, описывающий таблицу с данными о запросе
+    // класс, описывающий таблицу с данными о запросе = 'RequestInfo'
     public class RequestData
     {
         public int Id { get; set; }

@@ -1,6 +1,7 @@
 ﻿namespace RequestChallange.Model
 {
-    // сервис для работы  запросами
+    // через этот сервис отделим бизнес-логику приложения от того, что делает бд
+    // сервис для работы  запросами 'RequestInfo'
     public class RequestService
     {
         private readonly IRequestRepository _repo;
@@ -15,6 +16,7 @@
         // выход: -
         public async Task AddAsync(HttpRequest request, HttpResponse response, DateTime time)
         {
+            // приложение преобразовывает входные данные в то, во что нужно
             RequestInfo requestInfo = new RequestInfo()
             {
                 Method = request.Method,

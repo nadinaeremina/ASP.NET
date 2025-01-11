@@ -22,7 +22,7 @@ namespace AirportDictionaryAsp_v1.Api
 
         // обработчики
 
-        // получаем список стран
+        // 1 // получаем список всех стран
         [HttpGet]
         public async Task<List<CountryMessage>> ListAllAsync()
         {
@@ -35,7 +35,50 @@ namespace AirportDictionaryAsp_v1.Api
                 .ToList();
         }
 
-        // импорт стран
+        // 2 // получить список аэропортов страны по коду страны
+        [HttpGet("{code:alpha}/airports")]
+        public async Task<List<AirportListItemMessage>> GetAllAirportsByCodeAsync(string code)
+        {
+            // получаем список аэропортов
+            List<Airports> airports = await _countries.GetAllAirportsAsync(code);
+            // получаем список стран
+            List<Country> countries = await _countries.ListAllAsync();
+
+            // преобразовать список стран в словарь с ключами - id и значениями - кодами 
+
+            // 1 способ
+            Dictionary<int, string> countryCodeById =
+              countries.ToDictionary(
+                  country => country.Id,
+                  country => country.Code
+              );
+
+            // 2 способ
+            //Dictionary<int, string> countryCodeById = new Dictionary<int, string>();
+            //foreach (Country country in countries)
+            //{
+            //    countryCodeById[country.Id] = country.Code;
+            //}
+
+            // собрать список сообщений со странами
+            return airports.Select(airport => new AirportListItemMessage(
+                Id: airport.Id,
+                Name: airport.Name,
+                Code: airport.Code,
+                Location: airport.Location,
+                CountryCode: countryCodeById[airport.CountryId]
+            )).ToList();
+        }
+
+        // 3 // очистить данные всех стран с аэропортами 
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAsync()
+        {
+            await _countries.DeleteAllAsync();
+            return Ok();
+        }
+
+        // 4 // импортировать данные о странах 
         [HttpPut]
         // 'IActionResult' - rezultApi в контроллерах
         public async Task<IActionResult> ImportAsync(List<CountryMessage> countries)
