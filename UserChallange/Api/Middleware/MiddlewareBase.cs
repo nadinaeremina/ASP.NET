@@ -1,4 +1,4 @@
-﻿namespace UserController.Api.Middleware
+﻿namespace UserChallange.Api.Middleware
 {
     // MiddlewareBase - базовый класс для middleware приложения
     public abstract class MiddlewareBase

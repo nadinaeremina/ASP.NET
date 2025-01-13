@@ -1,6 +1,6 @@
-﻿using UserController.Model.Users;
+﻿using UserChallange.Model.Users;
 
-namespace UserController.Model.Service
+namespace UserChallange.Model.Service
 {
     // storage
     // IUserRepository - интерфейс хранилища пользователей
@@ -13,11 +13,15 @@ namespace UserController.Model.Service
 
         // получить пользователя по email-у
         Task<User?> GetByEmailAsync(string email);
+        // получить пользователя по uuid-у
+        Task<User?> GetByUUIDAsync(Guid uuid);
 
         // добавление пользователя в хранилище
         Task InsertAsync(User user);
 
         // получение списка всех пользователей
         Task<List<User>> SelectAllAsync();
+        // обновить пользователя
+        Task UpdateAsync(User user);
     }
 }

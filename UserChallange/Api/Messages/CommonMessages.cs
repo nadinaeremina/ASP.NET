@@ -1,4 +1,4 @@
-﻿namespace UserController.Api.Messages
+﻿namespace UserChallange.Api.Messages
 {
     // StringMessage - строковое сообщение
     public record StringMessage(string Message);

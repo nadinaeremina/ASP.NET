@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using UserChallange.Model.Users;
 
-namespace RequestChallange.Storage
+namespace UserChallange.Storage
 {
     public class ApplicationDbContext: DbContext
     {
-        public required DbSet<RequestData> Requests { get; set; }
+        public required DbSet<User> Users { get; set; }
 
         // переопределение метода конфигурации
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -17,7 +18,4 @@ namespace RequestChallange.Storage
             optionsBuilder.UseSqlServer(connectionString);
         }
     }
-    // есть 'dbContext' - можно сделать миграции
-    // Add-Migration Init -OutputDir "./Storage/Migtations" - чтобы миграции были в папочке 'Storage'
-    // 'Remove-Migration' - удалить миграции
 }

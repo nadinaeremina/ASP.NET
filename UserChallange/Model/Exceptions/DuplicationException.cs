@@ -1,4 +1,4 @@
-﻿namespace UserController.Model.Exceptions
+﻿namespace UserChallange.Model.Exceptions
 {
     // DuplicationException - исключение дублирования уникальных данных в модели
     public class DuplicationException : ApplicationException

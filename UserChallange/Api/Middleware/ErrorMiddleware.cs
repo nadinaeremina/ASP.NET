@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
-using UserController.Api.Messages;
+using UserChallange.Api.Messages;
 
-namespace UserController.Api.Middleware
+namespace UserChallange.Api.Middleware
 {
     // 'ErrorMiddleware' - middleware обработки ошибок
     public class ErrorMiddleware : MiddlewareBase

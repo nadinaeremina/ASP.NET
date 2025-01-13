@@ -1,4 +1,4 @@
-﻿namespace UserController.Api.Messages
+﻿namespace UserChallange.Api.Messages
 {
     // RegistrationMessage - сообщение для регистрации пользователя
     public record RegistrationMessage(string Login, string Email);

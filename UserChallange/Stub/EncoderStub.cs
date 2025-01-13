@@ -1,8 +1,8 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-using UserController.Model.Service;
+using UserChallange.Model.Service;
 
-namespace UserController.Stub
+namespace UserChallange.Stub
 {
     // EncoderStub - заглушка для IEncoder через md5
     public class EncoderStub : IEncoder

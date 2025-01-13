@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-using UserController.Api.Messages;
-using UserController.Model.Exceptions;
-using UserController.Model.Users;
-using ValidationException = UserController.Model.Exceptions.ValidationException;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using UserChallange.Api.Atributes;
+using UserChallange.Api.Messages;
+using UserChallange.Model.Exceptions;
+using UserChallange.Model.Users;
 
-namespace UserController.Api.Controllers
+namespace UserChallange.Api.Controllers
 {
     // UserController - контроллер для работы с пользователями
     [Route("api/user")]
@@ -19,6 +19,12 @@ namespace UserController.Api.Controllers
             _users = users;
         }
 
+        //{
+        //    "login": "johndoe1",
+        //    "email": "jhon19647@gmail.com"
+        //}
+
+        // зарегать пользователя
         [HttpPost]
         public async Task<IActionResult> RegisterAsync(RegistrationMessage data)
         {
@@ -41,8 +47,10 @@ namespace UserController.Api.Controllers
                 return Conflict(error);
             }
         }
-
+        // "apiKey": "c84f75c89eade38bb413d0b41f9b9df9"
+        // в заголовке принимает "X-Api-Key" - находит, либо не находит пользователя
         [HttpGet]
+        [Protect]
         public async Task<IActionResult> GetInfoAsync([FromHeader(Name = "X-Api-Key")] string apiKey)
         {
             try
@@ -58,5 +66,14 @@ namespace UserController.Api.Controllers
                 return NotFound(error);
             }
         }
+
+        //{
+        //    "uuid": "ab47bcb8-f505-44f4-b7c8-25f07e8afe3d",
+        //    "login": "johndoe1",
+        //    "email": "jhon19647@gmail.com",
+        //    "registeredAt": "2025-01-12T06:35:34.5705378Z"
+        //}
+
+        // но при перезапуске программы все данные исчезнут!!!!!!!!!!!!!!!!!!!!!!!!
     }
 }

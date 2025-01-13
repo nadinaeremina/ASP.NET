@@ -1,4 +1,4 @@
-﻿namespace UserController.Model.Service
+﻿namespace UserChallange.Model.Service
 {
     // IEncoder - интерфейс шифрования строки
     public interface IEncoder

@@ -1,11 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
-using UserController.Model.Exceptions;
-using UserController.Model.Service;
-using ValidationException = UserController.Model.Exceptions.ValidationException;
+﻿using System.Text.RegularExpressions;
+using UserChallange.Model.Exceptions;
+using UserChallange.Model.Service;
 
-namespace UserController.Model.Users
+namespace UserChallange.Model.Users
 {
     // то, что приложение умеет делать с пользователями
     public class UserScenarios
@@ -30,7 +27,6 @@ namespace UserController.Model.Users
         // выход: api-ключ для данного пользователя
         // исключения: 'ValidationException' (невалидный логин или емэйл),
         // 'DuplicationException' (не должно быть пользователя с таким же логином или емэйлом)
-
         public async Task<string> RegisterAsync(string login, string email)
         {
             // валидация строк
@@ -62,11 +58,13 @@ namespace UserController.Model.Users
                 Login = login,
                 Email = email,
                 RegisteredAt = DateTime.UtcNow,
+                IsVIP = false
             };
             string apiKey = generateApiKey(user);
             await _users.InsertAsync(user);
             return apiKey;
         }
+
         // 'GetUserAsync' - получение данных о пользователе по ключу
         // вход: api-ключ пользователя
         // выход: обьект с информацией о пользователе
@@ -82,7 +80,8 @@ namespace UserController.Model.Users
             }
             throw new UserNotFoundException();
         }
-        // генерация api-ключа для пользователя
+
+        // генерация api-ключа для пользователями 
         private string generateApiKey(User user)
         {
             return _apiKeyGenerator.Encode($"{user.UUID} - {user.Login} - {user.Email} - {user.RegisteredAt}");

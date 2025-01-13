@@ -1,4 +1,4 @@
-﻿namespace UserController.Model.Exceptions
+﻿namespace UserChallange.Model.Exceptions
 {
     // ValidationException - исключение валидации чего-либо в модели
     public class ValidationException : ApplicationException

@@ -1,24 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using UserController.Api.Messages;
+using UserChallange.Api.Atributes;
+using UserChallange.Api.Messages;
 
-namespace UserController.Api.Controllers
+namespace UserChallange.Api.Controllers
 {
-    // ResourceController - некоторый ресурс API
+    // ResourceController - некоторый ресурс API, который должен быть защищен
+    // только зареганный пользователь сможет получать доступ к этим обработчикам
     [Route("api/resource")]
     [ApiController]
     public class ResourceController : ControllerBase
     {
-
         [HttpGet]
+        [Protect]
+        // здесь по умолчанию: isVIP: false
         public StringMessage Get()
         {
             return new StringMessage(Message: "you have access to some api-resource");
         }
 
-        [HttpPost]
-        public StringMessage Post()
+        // можно помечать контроллеры специальным атрибутом - что он защищен
+        // любой атрибут - это класс, который наследуется от базового атрибута
+
+        [HttpGet("vip")]
+        [Protect(isVIP:true)]
+        // здесь по умолчанию: isVIP: true
+        public StringMessage GetVip()
         {
-            return new StringMessage(Message: "you have access to some POST api-resource");
+            return new StringMessage(Message: "you have access to some VIP api-resource");
         }
     }
 }

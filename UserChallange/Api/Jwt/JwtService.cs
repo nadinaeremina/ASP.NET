@@ -10,22 +10,20 @@ namespace UserChallange.Api.Jwt
         // ConfigureJwtOptions - метод конфигурации jwt-схемы аутентификации
         public static void ConfigureJWTOptions(JwtBearerOptions options)
         {
-            options.TokenValidationParameters = new TokenValidationParameters()
-            {
-                // издатель токена и валидировать ли издателя токена
-                ValidateIssuer = true,
-                VakidIssuer = JWT_ISSUER,
-                // потребитель токена и валидировать ли потребителя токена
-                ValidAudence = true,
-                // параметры валидации времени жизни,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero,
-                // параметры валидации подписи т окена
-                ValidateIssuerSugningKey = true,
-                IssuerSigningKeyResolver = 
-            };
+            //options.TokenValidationParameters = new TokenValidationParameters()
+            //{
+            //    // издатель токена и валидировать ли издателя токена
+            //    ValidateIssuer = true,
+            //    VakidIssuer = JWT_ISSUER,
+            //    // потребитель токена и валидировать ли потребителя токена
+            //    ValidAudence = true,
+            //    // параметры валидации времени жизни,
+            //    ValidateLifetime = true,
+            //    ClockSkew = TimeSpan.Zero,
+            //    // параметры валидации подписи т окена
+            //    ValidateIssuerSugningKey = true,
+            //    IssuerSigningKeyResolver = 
+            //};
         }
-
-        private const string 
     }
 }
