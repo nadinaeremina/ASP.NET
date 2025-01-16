@@ -37,6 +37,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserChallange", "UserChalla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DISandbox2", "DISandbox2\DISandbox2.csproj", "{64A4636F-CA83-43E6-B6AC-EBCD6451E41B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JwtToken", "JwtToken\JwtToken.csproj", "{BB62DA13-B3F3-4EFD-87DA-AF1C5DECF36A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorPages", "RazorPages\RazorPages.csproj", "{68DB615C-03AE-453C-99AE-821D766AE3EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +115,14 @@ Global
 		{64A4636F-CA83-43E6-B6AC-EBCD6451E41B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64A4636F-CA83-43E6-B6AC-EBCD6451E41B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64A4636F-CA83-43E6-B6AC-EBCD6451E41B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB62DA13-B3F3-4EFD-87DA-AF1C5DECF36A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB62DA13-B3F3-4EFD-87DA-AF1C5DECF36A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB62DA13-B3F3-4EFD-87DA-AF1C5DECF36A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB62DA13-B3F3-4EFD-87DA-AF1C5DECF36A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68DB615C-03AE-453C-99AE-821D766AE3EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68DB615C-03AE-453C-99AE-821D766AE3EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68DB615C-03AE-453C-99AE-821D766AE3EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68DB615C-03AE-453C-99AE-821D766AE3EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

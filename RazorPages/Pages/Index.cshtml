@@ -1,0 +1,51 @@
+﻿@page
+@model RazorPages.Pages.IndexModel
+@{
+    // C#-код
+    string header = "Hello from Razor Pages!";
+    string time = $"{DateTime.Now:HH.mm.ss}";
+    string author = "Nadi";
+
+    string header2 = "Happy New Year";
+    DateTime now = DateTime.Now;
+    string text = "До нового года осталось:";
+    DateTime new_year = new DateTime(now.Year+1, 1, 1);
+    TimeSpan delta = new_year - now;
+    int days = delta.Days;
+    int hour = delta.Hours;
+    int minutes = delta.Minutes;
+    int sec = delta.Seconds;
+
+}
+
+<!--HTML-код-->
+<!--
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Razor Pages Pen Probe</title>
+</head>
+<body>
+    <h1>@header</h1>
+    <p>
+        Now is @time
+    </p>
+    <h4>Created by @author</h4>
+</body>
+</html>
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Happy New Year</title>
+</head>
+<body>
+    <h1>@header</h1>
+    <p>
+        Осталось до нового года @days дней @hour часов @minutes минут и @sec секунд
+    <h4>Created by @author</h4>
+</body>
+</html>

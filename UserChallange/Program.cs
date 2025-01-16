@@ -3,7 +3,6 @@ using UserChallange.Model.Crypto;
 using UserChallange.Model.Service;
 using UserChallange.Model.Users;
 using UserChallange.Storage;
-using UserChallange.Stub;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddTransient<UserScenarios>();
 builder.Services.AddTransient<UserAdministrationScenarios>();
 builder.Services.AddTransient<IUserRepository, UserStorage>();
-builder.Services.AddTransient<IEncoder, EncoderStub>();
+builder.Services.AddDbContext<ApplicationDbContext>();
 
 // добавили фабрику
 builder.Services.AddTransient(opts => EncoderFactory.CreateEncoder()); 

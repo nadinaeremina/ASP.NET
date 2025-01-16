@@ -24,14 +24,12 @@ namespace UserChallange.Api.Controllers
             return await _users.ListAllAsync();
         }
 
-        // получить пользователя по UUID
         [HttpGet("{uuid:guid}")]
-        public async Task<IActionResult> GetByUUIDAsync(Guid uuid)
+        public async Task<IActionResult> GetAsync(Guid uuid)
         {
             try
             {
-                // получаем юзера
-                User user = await _users.GetByUUIDAsync(uuid);
+                User user = await _users.GetUserAsync(uuid);
                 // 200
                 return Ok(user);
             }
@@ -43,45 +41,6 @@ namespace UserChallange.Api.Controllers
             }
         }
 
-        // получить пользователя по email
-        [HttpGet("{email}")]
-        public async Task<IActionResult> GetByEmailAsync(string email)
-        {
-            try
-            {
-                // получаем юзера
-                User user = await _users.GetByEmailAsync(email);
-                // 200
-                return Ok(user);
-            }
-            catch (UserNotFoundException ex)
-            {
-                // 404
-                ErrorMessage error = new ErrorMessage(Type: ex.GetType().Name, Message: ex.Message);
-                return NotFound(ex.Message);
-            }
-        }
-
-        // получить пользователя по login
-        [HttpGet("login/{login}")]
-        public async Task<IActionResult> GetAsync(string login)
-        {
-            try
-            {
-                // получаем юзера
-                User user = await _users.GetByLoginAsync(login);
-                // 200
-                return Ok(user);
-            }
-            catch (UserNotFoundException ex)
-            {
-                // 404
-                ErrorMessage error = new ErrorMessage(Type: ex.GetType().Name, Message: ex.Message);
-                return NotFound(error);
-            }
-        }
-
-        // установить роль
         [HttpPatch("{uuid:guid}/set-vip")]
         public async Task<IActionResult> SetVipAsync(Guid uuid)
         {
@@ -99,31 +58,12 @@ namespace UserChallange.Api.Controllers
             }
         }
 
-        // забрать роль
         [HttpPatch("{uuid:guid}/unset-vip")]
         public async Task<IActionResult> UnsetVipAsync(Guid uuid)
         {
             try
             {
                 await _users.UnsetVIPAsync(uuid);
-                // 204
-                return NoContent();
-            }
-            catch (UserNotFoundException ex)
-            {
-                // 404
-                ErrorMessage error = new ErrorMessage(Type: ex.GetType().Name, Message: ex.Message);
-                return NotFound(error);
-            }
-        }
-
-        // 
-        [HttpPut]
-        public async Task<IActionResult> AddAsync(User user)
-        {
-            try
-            {
-                await _users.InsertAsync(user);
                 // 204
                 return NoContent();
             }

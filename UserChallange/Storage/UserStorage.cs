@@ -63,9 +63,12 @@ namespace UserChallange.Storage
             if (updated != null)
             {
                 // удалить сначала по значению из списка
-                _db.Users.Remove(updated);
+                //_db.Users.Remove(updated);             
                 // а потом добавить обновленного
-                _db.Users.Add(user);
+                //_db.Users.Add(user);
+
+                _db.Update(user);
+                await _db.SaveChangesAsync();
             }
         }
     }
