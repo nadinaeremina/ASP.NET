@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using JwtToken.Api.JWT;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserChallange.Api.Messages;
 
@@ -10,6 +11,8 @@ namespace UserChallange.Api.Controllers
     [ApiController]
     public class ResourceController : ControllerBase
     {
+        // 1 // в 'headers' передаем заголовок 'Authorization' и прописываем: Bearer {token}
+        // 2 // в 'Authorization' выбираем 'Bearer Token' (всегда) и в 'Token' вставялем сам токен 
         [HttpGet]
         [Authorize] // помечает обработчик как требуемый для защиты через аутентификацию
         // в него можно передавать различные параметры
@@ -23,7 +26,9 @@ namespace UserChallange.Api.Controllers
         // любой атрибут - это класс, который наследуется от базового атрибута
 
         [HttpGet("vip")]
-        [Authorize]
+        // здесь будут прописываться названия ролей, разделенных запятой
+        // [Authorize(Roles = "vip")]
+        [Authorize(Roles = JwtService.VIP_ROLE)]
         // здесь по умолчанию: isVIP: true
         public StringMessage GetVip()
         {

@@ -3,12 +3,13 @@ using UserChallange.Api.Middleware;
 using UserChallange.Model.Service;
 using UserChallange.Model.Users;
 using UserChallange.Stub;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.JwtBearer; // дополнительно устанавливаем
 using JwtToken.Api.JWT;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
 builder.Services.AddTransient<UserScenarios>();
 builder.Services.AddTransient<IUserRepository, UserStorageStub>();
 builder.Services.AddTransient<IEncoder, EncoderStub>();
@@ -18,9 +19,16 @@ builder.Services.AddTransient<UserAdministrationScenarios>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(JwtService.ConfigureJWTOptions);
 // выполнили конфигурацию (передаем данный метод - можно просто л€мбду)
+// 'AuthenticationScheme' - это просто схема
+// 'AddJwtBearer' - конфигураци€
 
 // берем название схемы // необходимо еще сконфигурировать Jwt
 builder.Services.AddAuthorization();
+// эти 2 сервиса провер€ют наличие атрибута 'Authorize' у обработчика
+// провер€ют переданные данные
+
+// добавл€ем наш второй метод из 'JwtService' (нестатический)
+builder.Services.AddTransient<JwtService>();
 
 var app = builder.Build();
 

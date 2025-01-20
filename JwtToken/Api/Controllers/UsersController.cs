@@ -47,7 +47,7 @@ namespace UserChallange.Api.Controllers
                 return Conflict(error);
             }
         }
-        // "apiKey": "c84f75c89eade38bb413d0b41f9b9df9"
+
         // в заголовке принимает "X-Api-Key" - находит, либо не находит пользователя
         [HttpGet]
         [Authorize]

@@ -1,0 +1,120 @@
+﻿@page
+@model RazorPages2.Pages.IndexModel
+@{
+    int hour = DateTime.Now.Hour;
+    int day = Convert.ToInt32(DateTime.Now.DayOfWeek);
+}
+
+// 1
+@* <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razor Pages Sandbox</title>
+</head>
+<body>
+    <h1>Welcome to Razor Pages Sandbox!</h1>
+    @if (hour >= 0 && hour < 6)
+    {
+        <p>Ночь</p>
+    } 
+    else if (hour >= 6 && hour < 12) {
+        <p>Утро</p>
+    }
+    else if (hour >= 12 && hour < 18) {
+        <p>День</p>
+    }
+    else {
+        <p>Вечечр</p>
+    }
+</body>
+</html> *@
+
+// 2
+@* <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razor Pages Sandbox</title>
+</head>
+<body>
+    <h1>Welcome to Razor Pages Sandbox!</h1>
+    // код всегда начинается с собачки
+    @if (hour >= 0 && hour < 6)
+    {
+        <p>Ночь</p>
+    }
+    else if (hour >= 6 && hour < 12)
+    {
+        <p>Утро</p>
+    }
+    else if (hour >= 12 && hour < 18)
+    {
+        <p>День</p>
+    }
+    else
+    {
+        <p>Вечечр</p>
+    }
+</body>
+</html> *@
+
+// 3
+@{
+    // Задача: вывести список дней недели на русском языке
+    // выходные дни (сб-вс) выделить красным цветом
+    // сегодняшний день выделить полужирным начертанием
+    // в C#: 0 - вс, 1 - пн, 2 - вт, 3 - ср, 4 - чт, 5 - пт, 6 - сб 
+    int todayNumber = (int)DateTime.Now.DayOfWeek;
+    Dictionary<int, string> dayByNumber = new Dictionary<int, string>()
+    {
+        {1, "понедельник"},
+        {2, "вторник"},
+        {3, "среда"},
+        {4, "четверг"},
+        {5, "пятница"},
+        {6, "суббота"},
+        {0, "воскресенье"},
+    };
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razor Pages Sandbox</title>
+    <style>
+        .weekday {
+            font-family: Consolas;
+        }
+        .today {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        .weekend {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Razor Pages Sandbox!</h1>
+
+    <ol>
+        @foreach (int dayNumber in dayByNumber.Keys) 
+        {
+            string classValue = "weekday";
+            if (dayNumber == todayNumber) 
+            {
+                classValue += " today";
+            }
+            if (dayNumber == 6 || dayNumber == 0)
+            {
+                classValue += " weekend";
+            }
+            <li class="@classValue">@dayByNumber[dayNumber]</li>
+        }
+    </ol>
+</body>
+</html>

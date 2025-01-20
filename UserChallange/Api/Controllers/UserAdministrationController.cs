@@ -64,7 +64,7 @@ namespace UserChallange.Api.Controllers
 
         // получить пользователя по login
         [HttpGet("login/{login}")]
-        public async Task<IActionResult> GetAsync(string login)
+        public async Task<IActionResult> GetByLoginAsync(string login)
         {
             try
             {

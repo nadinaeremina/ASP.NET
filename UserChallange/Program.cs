@@ -1,4 +1,6 @@
-﻿using UserChallange.Api.Middleware;
+﻿using JwtToken.Api.JWT;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using UserChallange.Api.Middleware;
 using UserChallange.Model.Crypto;
 using UserChallange.Model.Service;
 using UserChallange.Model.Users;
@@ -14,7 +16,22 @@ builder.Services.AddTransient<IUserRepository, UserStorage>();
 builder.Services.AddDbContext<ApplicationDbContext>();
 
 // добавили фабрику
-builder.Services.AddTransient(opts => EncoderFactory.CreateEncoder()); 
+builder.Services.AddTransient(opts => EncoderFactory.CreateEncoder());
+
+// в ASP есть встроенный 'middleware' для авторизации и аутентификации
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(JwtService.ConfigureJWTOptions);
+// выполнили конфигурацию (передаем данный метод - можно просто лямбду)
+// 'AuthenticationScheme' - это просто схема
+// 'AddJwtBearer' - конфигурация
+
+// берем название схемы // необходимо еще сконфигурировать Jwt
+builder.Services.AddAuthorization();
+// эти 2 сервиса проверяют наличие атрибута 'Authorize' у обработчика
+// проверяют переданные данные
+
+// добавляем наш второй метод из 'JwtService' (нестатический)
+builder.Services.AddTransient<JwtService>();
 
 var app = builder.Build();
 
@@ -26,6 +43,10 @@ app.MapControllers();
 // в конвейер обработки запроса применяется метод UseMiddleware().
 app.UseMiddleware<ErrorMiddleware>();
 app.UseMiddleware<SecurityMiddleware>();
+
+// добавить middleware в аутентификацию и авторизацию
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
 
