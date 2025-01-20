@@ -15,7 +15,7 @@ builder.Services.AddTransient<UserAdministrationScenarios>();
 builder.Services.AddTransient<IUserRepository, UserStorage>();
 builder.Services.AddDbContext<ApplicationDbContext>();
 
-// добавили фабрику
+// добавили фабрику //
 builder.Services.AddTransient(opts => EncoderFactory.CreateEncoder());
 
 // в ASP есть встроенный 'middleware' для авторизации и аутентификации
