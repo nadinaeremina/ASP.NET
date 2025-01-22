@@ -1,5 +1,6 @@
 ﻿@page
 @model RazorPages.Pages.IndexModel
+<!--если зотим вставить шарповый код: '@{}'-->
 @{
     // C#-код
     string header = "Hello from Razor Pages!";
@@ -15,8 +16,8 @@
     int hour = delta.Hours;
     int minutes = delta.Minutes;
     int sec = delta.Seconds;
-
 }
+<!--шаблонизатор 'Razor'-->
 
 <!--HTML-код-->
 <!--
@@ -36,6 +37,7 @@
 </html>
 -->
 
+// 'html'-страница
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,9 +45,11 @@
     <title>Happy New Year</title>
 </head>
 <body>
-    <h1>@header</h1>
+    <h1>@header2</h1>
     <p>
-        Осталось до нового года @days дней @hour часов @minutes минут и @sec секунд
+        @text @days дней @hour часов @minutes минут и @sec секунд
     <h4>Created by @author</h4>
 </body>
 </html>
+
+// страница Razor пустая

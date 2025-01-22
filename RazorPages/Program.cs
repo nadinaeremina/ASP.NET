@@ -5,7 +5,13 @@ builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-// выполним маппинг страниц 'Razor Pages'
+// выполним маппинг (маршрутизаци€) страниц 'Razor Pages'
 app.MapRazorPages();
+// маршрутизаци€ позвол€ет сопоставить  строку запроса URL с определенной страницей Razor
+// на основании ее расположени€ в проекте в папке Pages
 
 app.Run();
+
+// сервис и маппинг обеспечивают работу со страницами
+// html+razor и C# page model - модель страницы
+// выбираем ' Razor Page - Empty'
