@@ -1,11 +1,11 @@
-var builder = WebApplication.CreateBuilder(args);
+п»їvar builder = WebApplication.CreateBuilder(args);
 
-// подкючаем 'Razor Pages' - добавляем в проект сервисы 'Razor Pages'
+// РїРѕРґРєСЋС‡Р°РµРј 'Razor Pages' - РґРѕР±Р°РІР»СЏРµРј РІ РїСЂРѕРµРєС‚ СЃРµСЂРІРёСЃС‹ 'Razor Pages'
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-// выполним маппинг страниц 'Razor Pages'
+// РІС‹РїРѕР»РЅРёРј РјР°РїРїРёРЅРі СЃС‚СЂР°РЅРёС† 'Razor Pages'
 app.MapRazorPages();
 
 

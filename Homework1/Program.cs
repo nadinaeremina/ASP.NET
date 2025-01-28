@@ -1,4 +1,4 @@
-var builder = WebApplication.CreateBuilder(args);
+п»їvar builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
 app.MapGet("/", async (HttpContext context) =>
@@ -28,12 +28,12 @@ app.MapGet("/info", async (HttpContext context) =>
     {
         category = 64;
     }
-    // лучше обходиться без 'else' - чем более линейный код, тем более он читаемый
-    await context.Response.WriteAsync($"Имя компьютера: {Environment.MachineName}\n" +
-                                      $"Операционная система является: {category}-разрядной\n" +
-                                      $"Платформа и номер версии: {Environment.OSVersion}\n" +
-                                      $"Время, истекшее с момента загрузки ситемы: {Convert.ToInt32(Environment.TickCount / 1000 / 60)} минут\n" + 
-                                      $"Обьем используемой физической памяти: {Environment.WorkingSet/1024/1024} мегабайт");
+    // Р»СѓС‡С€Рµ РѕР±С…РѕРґРёС‚СЊСЃСЏ Р±РµР· 'else' - С‡РµРј Р±РѕР»РµРµ Р»РёРЅРµР№РЅС‹Р№ РєРѕРґ, С‚РµРј Р±РѕР»РµРµ РѕРЅ С‡РёС‚Р°РµРјС‹Р№
+    await context.Response.WriteAsync($"РРјСЏ РєРѕРјРїСЊСЋС‚РµСЂР°: {Environment.MachineName}\n" +
+                                      $"РћРїРµСЂР°С†РёРѕРЅРЅР°СЏ СЃРёСЃС‚РµРјР° СЏРІР»СЏРµС‚СЃСЏ: {category}-СЂР°Р·СЂСЏРґРЅРѕР№\n" +
+                                      $"РџР»Р°С‚С„РѕСЂРјР° Рё РЅРѕРјРµСЂ РІРµСЂСЃРёРё: {Environment.OSVersion}\n" +
+                                      $"Р’СЂРµРјСЏ, РёСЃС‚РµРєС€РµРµ СЃ РјРѕРјРµРЅС‚Р° Р·Р°РіСЂСѓР·РєРё СЃРёС‚РµРјС‹: {Convert.ToInt32(Environment.TickCount / 1000 / 60)} РјРёРЅСѓС‚\n" + 
+                                      $"РћР±СЊРµРј РёСЃРїРѕР»СЊР·СѓРµРјРѕР№ С„РёР·РёС‡РµСЃРєРѕР№ РїР°РјСЏС‚Рё: {Environment.WorkingSet/1024/1024} РјРµРіР°Р±Р°Р№С‚");
 });
 
 app.Run();
